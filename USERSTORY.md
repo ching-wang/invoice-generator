@@ -1,12 +1,11 @@
-# invoice-generator
+Qing's project: invoice-generator
 
 ## Models
 
-- User
+- User(seller)
+- Buyer
 - Invoice
 - WorkItem
-- InvoicePayment
-- Buyer
 
 ## User Stories
 
@@ -28,23 +27,22 @@
 - name
 - address
 - has many invoices
-- has many buyers
+- has many buyers through invoices
 
 ### Buyer
 
 - name
 - address
 - has many invoices
-- belongs to a user
+- belongs to a user through invoices
 
 ### Invoice
 
 - has many WorkItems
-- has many invoicePayment
 - has a invoice number
 - has a logo (Gravatar API maybe)
-- Invoice Data
-- Due Data
+- Invoice Date
+- Due Date
 - Notes
 
 ### Work Item
