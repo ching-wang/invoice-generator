@@ -25,14 +25,58 @@ function renderInvoices(invoices) {
 }
 
 function renderInvoice(invId) {
-  api.getInvoice(invId).then(invoice => listingInv(invoice));
+  api.getInvoice(invId).then(invoice => displayInv(invoice));
 }
 
-function listingInv(invoice) {
+function displayInv(invoice) {
   showInvDetail.innerHTML = "";
   logoImg.src = invoice.logo;
-  invNum.innerText = `Invoice # ${invoice.invoiceNumber}`;
+  invNumContent.innerText = `Invoice # ${invoice.invoiceNumber}`;
+  const invNumEditBtn = document.createElement("button");
+  invNumEditBtn.class = "btn-warning";
+  invNumEditBtn.classList.add("btn");
+  invNumEditBtn.classList.add("btn-link");
+  invNumEditBtn.classList.add("btn-sm");
+  invNumEditBtn.innerText = "Edit";
+  invNum.append(invNumEditBtn);
+
+  invNumEditBtn.addEventListener("click", () => {
+    invNumContent.style.display = "none";
+    invNumEditBtn.style.display = "none";
+
+    const newInvoiceNumForm = document.createElement("form");
+    newInvoiceNumForm.classList.add("form-inline");
+
+    const newInvoiceNum = document.createElement("input");
+    newInvoiceNum.value = invNumContent.textContent;
+    newInvoiceNumForm.append(newInvoiceNum);
+
+    const saveNewInvoiceNum = document.createElement("button");
+    saveNewInvoiceNum.type = "submit";
+    saveNewInvoiceNum.classList.add("btn");
+    saveNewInvoiceNum.classList.add("btn-link");
+    saveNewInvoiceNum.classList.add("btn-sm");
+    saveNewInvoiceNum.innerText = "Save";
+    newInvoiceNumForm.append(saveNewInvoiceNum);
+
+    const resetInvoiceNum = () => {
+      invNumContent.style.display = "inline";
+      invNumEditBtn.style.display = "inline";
+      newInvoiceNumForm.remove();
+    };
+
+    invNum.append(newInvoiceNumForm);
+
+    newInvoiceNumForm.addEventListener("submit", event => {
+      event.preventDefault();
+    });
+  });
+
   userName.innerText = `User Name: ${invoice.user.name}`;
+  const userNameEditBtn = document.createElement("button");
+  userNameEditBtn.innerText = "Edit";
+  userName.append(userNameEditBtn);
+
   userAddr.innerText = `User Adress: ${invoice.user.address}`;
   userCardBody.classList.add("card-body");
   userCard.append(userName, userAddr);
