@@ -13,12 +13,34 @@
     <title>Invoice Generator</title>
   </head>
   <body>
-    <h1 class="p-3 mb-2 bg-primary text-white">Invoice Generator</h1>
 
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container">
+       <h1 class="text-white">Invoice Generator</h1>
+       <form class="form-inline">
+        <button id="new-invoice", class="btn btn-outline-dark my-2 my-sm-0" type="button">Create an Invoice
+        </button>
+      </form>
+      </div>
+    </nav>
+    <div id="wrapper" class="container">
+     <div class="row justify-content-center">
+       <div class="col">
+        <ul id="invoice-ul" , class="list-group"></ul>
+       </div>
+     </div>
+     <div class="row justify-content-center">
+      <div class="col">
+        <div id="invoice-container"></div>
+      </div>
+     </div>
+     <div id="show-pane">
+     <ul class="font-italic", id="show-inv-detail"></ul>
+    </div>
     <script src="src/util.js"></script>
     <script src="src/api.js"></script>
-    <script src="src/listeners.js"></script>
     <script src="src/selectors.js"></script>
+    <script src="src/listeners.js"></script>
     <script src="src/state.js"></script>
     <script src="src/methods.js"></script>
   </body>

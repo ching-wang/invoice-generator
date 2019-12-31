@@ -3,12 +3,40 @@ class InvoiceGeneratorApi {
     this.baseUrl = "http://localhost:3000";
   }
 
+  //get invoices
   async getInvoices() {
     return this.fetchJson("/invoices");
   }
 
   async getInvoice(invoiceId) {
     return this.fetchJson(`/invoices/${invoiceId}`);
+  }
+
+  //get users
+  async getUsers() {
+    return this.fetchJson("/users");
+  }
+
+  async getUser(userID) {
+    return this.fetchJson(`/${userID}`);
+  }
+
+  //get buyers
+  async getBuyers() {
+    return this.fetchJson("/users");
+  }
+
+  async getBuyers(userID) {
+    return this.fetchJson(`/${userID}`);
+  }
+
+  //get Work-items
+  async getWorkItems() {
+    return this.fetchJson("/work_items");
+  }
+
+  async getWorkItem(workItemID) {
+    return this.fetchJson(`${workItemID}`);
   }
 
   async fetchJson(path) {
