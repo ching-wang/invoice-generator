@@ -39,8 +39,12 @@ class InvoiceGeneratorApi {
     return this.fetchJson(`${workItemID}`);
   }
 
-  async patchInvoice(invoiceId, patch) {
-    return this.patchJson(`/invoices/${invoiceId}`, patch);
+  async patchInvoice(invoiceId, patchData) {
+    return this.patchJson(`/invoices/${invoiceId}`, patchData);
+  }
+
+  async patchUser(userId, patchData) {
+    return this.patchJson(`/users/${userId}`, patchData);
   }
 
   async fetchJson(path) {
@@ -57,7 +61,12 @@ class InvoiceGeneratorApi {
   async patchJson(path, body) {
     const url = this.makeUrl(path);
     const config = {
-      method: "PATCH"
+      method: "PATCH",
+      body: JSON.stringify(body),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
     };
     debugLog("API patching URL...", { url, config });
 
