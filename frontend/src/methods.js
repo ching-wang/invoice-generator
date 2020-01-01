@@ -69,6 +69,14 @@ function displayInv(invoice) {
 
     newInvoiceNumForm.addEventListener("submit", event => {
       event.preventDefault();
+
+      api
+        .patchInvoice(invoice.id, newInvoiceNum.value)
+        .then(data => {
+          invNumContent.innerText = data.invoiceNumber;
+          resetInvoiceNum();
+        })
+        .catch(() => resetInvoiceNum());
     });
   });
 
