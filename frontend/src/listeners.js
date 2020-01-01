@@ -3,7 +3,7 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 selectNewInvBtn().addEventListener("click", () => {
-  //
+  api.postInvoice({ user_id: 1 }).then(data => renderInvoice(data.id));
 });
 
 // selectTitle().addEventListener("click", () => {

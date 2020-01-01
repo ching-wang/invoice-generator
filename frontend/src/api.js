@@ -39,6 +39,10 @@ class InvoiceGeneratorApi {
     return this.fetchJson(`${workItemID}`);
   }
 
+  async postInvoice(data) {
+    return this.postJson("/invoices", data);
+  }
+
   async patchInvoice(invoiceId, patchData) {
     return this.patchJson(`/invoices/${invoiceId}`, patchData);
   }
@@ -73,6 +77,25 @@ class InvoiceGeneratorApi {
     const res = await fetch(url, config);
     const json = await res.json();
     debugLog("API got response from PATCH", { url, status: res.status, json });
+
+    return json;
+  }
+
+  async postJson(path, body) {
+    const url = this.makeUrl(path);
+    const config = {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    };
+    debugLog("API posting URL...", { url, config });
+
+    const res = await fetch(url, config);
+    const json = await res.json();
+    debugLog("API got response from POST", { url, status: res.status, json });
 
     return json;
   }

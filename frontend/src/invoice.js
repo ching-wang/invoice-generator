@@ -1,20 +1,22 @@
 function renderInvoices(invoices) {
-  invoices.forEach(invoice => {
-    invoiceNumLi.classList.add("list-group-item");
-    const invBtn = document.createElement("button");
-    ["btn", "btn-secondary", "btn-lg", "active"].forEach(cls =>
-      invBtn.classList.add(cls)
-    );
-    invBtn.style.margin = "10px";
-    invBtn.innerText = `Invoice No.: ${invoice.invoiceNumber}`;
-    invBtn.id = `invoice-${invoice.id}`;
-    invoiceNumLi.append(invBtn);
-    invoiceUl.append(invoiceNumLi);
+  invoices
+    .filter(invoice => !!invoice.invoiceNumber)
+    .forEach(invoice => {
+      invoiceNumLi.classList.add("list-group-item");
+      const invBtn = document.createElement("button");
+      ["btn", "btn-secondary", "btn-lg", "active"].forEach(cls =>
+        invBtn.classList.add(cls)
+      );
+      invBtn.style.margin = "10px";
+      invBtn.innerText = `Invoice No.: ${invoice.invoiceNumber}`;
+      invBtn.id = `invoice-${invoice.id}`;
+      invoiceNumLi.append(invBtn);
+      invoiceUl.append(invoiceNumLi);
 
-    invBtn.addEventListener("click", () => {
-      renderInvoice(invoice.id);
+      invBtn.addEventListener("click", () => {
+        renderInvoice(invoice.id);
+      });
     });
-  });
 }
 
 function renderInvoice(invId) {
@@ -46,7 +48,12 @@ const displayInvoiceLogo = invoice => {
   const invLogoCol = document.createElement("div");
   invLogoCol.classList.add("col-3");
 
-  logoImg.src = invoice.logo;
+  if (invoice.logo) {
+    logoImg.src = invoice.logo;
+  } else {
+    logoImg.src =
+      "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png";
+  }
 
   invLogoCol.append(invNum);
   invLogoCol.append(logoImg);
