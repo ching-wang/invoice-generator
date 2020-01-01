@@ -33,61 +33,30 @@ function displayInv(invoice) {
   invNum.innerHTML = "";
   userName.innerHTML = "";
 
+  const invLogoCol = document.createElement("div");
+  invLogoCol.classList.add("col-3");
+  invLogoCol.append(invNum);
+  invLogoCol.append(logoImg);
+
   logoImg.src = invoice.logo;
 
   const invNumContent = document.createElement("span");
+  invNum.textContent = "Invoice # ";
   invNum.append(invNumContent);
-  invNumContent.innerText = `Invoice # ${invoice.invoiceNumber}`;
-
-  const invNumEditBtn = document.createElement("button");
-
-  invNumEditBtn.classList.add("btn");
-  invNumEditBtn.classList.add("btn-link");
-  invNumEditBtn.classList.add("btn-sm");
-  invNumEditBtn.innerText = "Edit";
-
-  console.log("Appending invoice number edit button");
-  invNum.append(invNumEditBtn);
-
-  invNumEditBtn.addEventListener("click", () => {
-    invNumContent.style.display = "none";
-    invNumEditBtn.style.display = "none";
-
-    const newInvoiceNumForm = document.createElement("form");
-    newInvoiceNumForm.classList.add("form-inline");
-
-    const newInvoiceNum = document.createElement("input");
-    newInvoiceNum.value = invNumContent.textContent;
-    newInvoiceNumForm.append(newInvoiceNum);
-
-    const saveNewInvoiceNum = document.createElement("button");
-    saveNewInvoiceNum.type = "submit";
-    saveNewInvoiceNum.classList.add("btn");
-    saveNewInvoiceNum.classList.add("btn-link");
-    saveNewInvoiceNum.classList.add("btn-sm");
-    saveNewInvoiceNum.innerText = "Save";
-    newInvoiceNumForm.append(saveNewInvoiceNum);
-
-    const resetInvoiceNum = () => {
-      invNumContent.style.display = "inline";
-      invNumEditBtn.style.display = "inline";
-      newInvoiceNumForm.remove();
-    };
-
-    invNum.append(newInvoiceNumForm);
-
-    newInvoiceNumForm.addEventListener("submit", event => {
-      event.preventDefault();
-
-      api
-        .patchInvoice(invoice.id, newInvoiceNum.value)
-        .then(data => {
-          invNumContent.innerText = data.invoiceNumber;
-          resetInvoiceNum();
-        })
-        .catch(() => resetInvoiceNum());
-    });
+  invNumContent.innerText = invoice.invoiceNumber;
+  addEditListener(invNumContent, event => {
+    api
+      .patchInvoice(invoice.id, {
+        invoiceNumber: event.target.textContent.trim()
+      })
+      .then(data => {
+        event.target.textContent = data.invoiceNumber;
+      });
   });
+
+  const invUserCol = document.createElement("div");
+  invUserCol.classList.add("col");
+  invUserCol.append(userCard);
 
   userName.id = "user-name";
   userName.textContent = "User Name: ";
@@ -105,21 +74,20 @@ function displayInv(invoice) {
   });
 
   userAddr.innerText = `User Adress: ${invoice.user.address || "-"}`;
-  userCardBody.classList.add("card-body");
-  userCard.append(userName, userAddr);
+  userCardBody.append(userName, userAddr);
   userCard.append(userCardBody);
-  buyerName.innerText = `Buyer Name: ${invoice.buyer.name}`;
-  buyerAddr.innerText = `Buyer Adress: ${invoice.buyer.address}`;
-  userCardBody.classList.add("card-body");
-  buyerCard.append(buyerName, buyerAddr);
+
+  const invBuyerCol = document.createElement("div");
+  invBuyerCol.classList.add("col");
+  invBuyerCol.append(buyerCard);
+
+  buyerName.innerText = `Bill to: ${invoice.buyer.name}`;
+  buyerAddr.innerText = `${invoice.buyer.address}`;
+  buyerCardBody.classList.add("card-body");
+  buyerCardBody.append(buyerName, buyerAddr);
   buyerCard.append(buyerCardBody);
 
-  // const workItemDesc = document.createElement("p");
-  // workItemDesc.innerText =
-  // description: "web maintain",
-  // quantity: 10,
-  // rate: 60,
-  // amount: 70,
+  displayWorkItems(invoice.workItems);
 
-  showInvDetail.append(logoImg, invNum, userCard, buyerCard);
+  showInvDetail.append(invLogoCol, invUserCol, invBuyerCol);
 }
