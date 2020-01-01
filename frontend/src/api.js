@@ -62,7 +62,11 @@ class InvoiceGeneratorApi {
     const url = this.makeUrl(path);
     const config = {
       method: "PATCH",
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
     };
     debugLog("API patching URL...", { url, config });
 

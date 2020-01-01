@@ -31,6 +31,7 @@ function renderInvoice(invId) {
 function displayInv(invoice) {
   showInvDetail.innerHTML = "";
   invNum.innerHTML = "";
+  userName.innerHTML = "";
 
   logoImg.src = invoice.logo;
 
@@ -87,23 +88,23 @@ function displayInv(invoice) {
         .catch(() => resetInvoiceNum());
     });
   });
-  const userName = document.createElement("h5");
+
   userName.id = "user-name";
   userName.textContent = "User Name: ";
   const userNameContent = document.createElement("span");
-  userNameContent.innerText = invoice.user.name;
+  userNameContent.innerText = invoice.user.name || "-";
   userName.append(userNameContent);
 
   addEditListener(userNameContent, event => {
     console.log(event.target.textContent);
-    api.patchUser(invoice.user.id, { name: event.target.textContent });
+    api
+      .patchUser(invoice.user.id, { name: event.target.textContent })
+      .then(data => {
+        event.target.textContent = data.name;
+      });
   });
 
-  //const userNameEditBtn = document.createElement("button");
-  //userNameEditBtn.innerText = "Edit";
-  //userName.append(userNameEditBtn);
-
-  userAddr.innerText = `User Adress: ${invoice.user.address}`;
+  userAddr.innerText = `User Adress: ${invoice.user.address || "-"}`;
   userCardBody.classList.add("card-body");
   userCard.append(userName, userAddr);
   userCard.append(userCardBody);
