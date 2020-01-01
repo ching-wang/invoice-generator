@@ -1,8 +1,3 @@
-const api = new InvoiceGeneratorApi();
-const loadInvoices = () => {
-  api.getInvoices().then(invoices => renderInvoices(invoices));
-};
-
 function renderInvoices(invoices) {
   invoices.forEach(invoice => {
     invoiceNumLi.classList.add("list-group-item");
@@ -29,17 +24,36 @@ function renderInvoice(invId) {
 }
 
 function displayInv(invoice) {
+  resetInvoice();
+
+  const invLogoCol = displayInvoiceLogo(invoice);
+  displayInvoiceNumber(invoice);
+  const invUserCol = displayInvoiceUser(invoice);
+  const invBuyerCol = displayInvoiceBuyer(invoice);
+  showInvDetail.append(invLogoCol, invUserCol, invBuyerCol);
+
+  displayWorkItems(invoice.workItems);
+}
+
+const resetInvoice = () => {
   showInvDetail.innerHTML = "";
   invNum.innerHTML = "";
   userName.innerHTML = "";
+};
 
+const displayInvoiceLogo = invoice => {
   const invLogoCol = document.createElement("div");
   invLogoCol.classList.add("col-3");
-  invLogoCol.append(invNum);
-  invLogoCol.append(logoImg);
 
   logoImg.src = invoice.logo;
 
+  invLogoCol.append(invNum);
+  invLogoCol.append(logoImg);
+
+  return invLogoCol;
+};
+
+const displayInvoiceNumber = invoice => {
   const invNumContent = document.createElement("span");
   invNum.textContent = "Invoice # ";
   invNum.append(invNumContent);
@@ -53,7 +67,9 @@ function displayInv(invoice) {
         event.target.textContent = data.invoiceNumber;
       });
   });
+};
 
+const displayInvoiceUser = invoice => {
   const invUserCol = document.createElement("div");
   invUserCol.classList.add("col");
   invUserCol.append(userCard);
@@ -77,6 +93,10 @@ function displayInv(invoice) {
   userCardBody.append(userName, userAddr);
   userCard.append(userCardBody);
 
+  return invUserCol;
+};
+
+const displayInvoiceBuyer = invoice => {
   const invBuyerCol = document.createElement("div");
   invBuyerCol.classList.add("col");
   invBuyerCol.append(buyerCard);
@@ -87,7 +107,5 @@ function displayInv(invoice) {
   buyerCardBody.append(buyerName, buyerAddr);
   buyerCard.append(buyerCardBody);
 
-  displayWorkItems(invoice.workItems);
-
-  showInvDetail.append(invLogoCol, invUserCol, invBuyerCol);
-}
+  return invBuyerCol;
+};
