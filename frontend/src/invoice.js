@@ -12,15 +12,18 @@ function renderInvoices(invoices) {
     invoiceUl.append(invoiceNumLi);
 
     invBtn.addEventListener("click", () => {
-      // const invContainer = document.querySelector("#invoice-container");
-      // invContainer.style.visibility = "hidden";
       renderInvoice(invoice.id);
     });
   });
 }
 
 function renderInvoice(invId) {
-  api.getInvoice(invId).then(invoice => displayInv(invoice));
+  api.getInvoice(invId).then(invoice => {
+    displayInv(invoice);
+
+    const workItemsCont = displayWorkItems(invoice.workItems);
+    invoiceCardBody.append(workItemsCont);
+  });
 }
 
 function displayInv(invoice) {
@@ -31,8 +34,6 @@ function displayInv(invoice) {
   const invUserCol = displayInvoiceUser(invoice);
   const invBuyerCol = displayInvoiceBuyer(invoice);
   showInvDetail.append(invLogoCol, invUserCol, invBuyerCol);
-
-  displayWorkItems(invoice.workItems);
 }
 
 const resetInvoice = () => {
@@ -70,8 +71,7 @@ const displayInvoiceNumber = invoice => {
 };
 
 const displayInvoiceUser = invoice => {
-  const invUserCol = document.createElement("div");
-  invUserCol.classList.add("col");
+  const invUserCol = createCol();
   invUserCol.append(userCard);
 
   userName.id = "user-name";
@@ -97,8 +97,7 @@ const displayInvoiceUser = invoice => {
 };
 
 const displayInvoiceBuyer = invoice => {
-  const invBuyerCol = document.createElement("div");
-  invBuyerCol.classList.add("col");
+  const invBuyerCol = createCol();
   invBuyerCol.append(buyerCard);
 
   buyerName.innerText = `Bill to: ${invoice.buyer.name}`;

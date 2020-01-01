@@ -3,7 +3,7 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 selectNewInvBtn().addEventListener("click", () => {
-  window.alert("Please fill in the information");
+  //
 });
 
 // selectTitle().addEventListener("click", () => {
