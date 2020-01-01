@@ -18,12 +18,12 @@ inv_a = Invoice.create(
   invoiceDate: 20191208,
   duedate: 20200110,
   notes: "this is the first invoice",
-  user_id: user_a,
-  buyer_id: buyer_a,
+  user_id: user_a.id,
+  buyer_id: buyer_a.id,
 )
 
 inv_b = Invoice.create(
-  logo: "https://dynamic.brandcrowd.com/asset/logo/522494d1-50ee-4316-bbc9-58b1f90bab5e/",
+  logo: "https://cdn.dribbble.com/users/617587/screenshots/4753797/tandem800x600_v1_1x.png",
   invoiceNumber: "45677889",
   invoiceDate: 20181208,
   duedate: 20190110,
