@@ -1,0 +1,17 @@
+.number-col {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.header-row {
+  background: navy;
+  color: white;
+}
+
+.shade {
+  background-color: lightgray;
+}
+
+[contenteditable] {
+  outline: 1px lightgray dashed;
+}

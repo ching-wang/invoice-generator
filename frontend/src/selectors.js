@@ -7,6 +7,8 @@ selectNewInvBtn();
 const invoiceUl = document.querySelector("#invoice-ul");
 const invoiceNumLi = document.createElement("li");
 
+const invoiceCardBody = document.querySelector("#invoice-card-body");
+
 const invContainer = document.querySelector("#invoice-container");
 
 const showInvDetail = document.querySelector("#show-inv-detail");
