@@ -87,12 +87,21 @@ function displayInv(invoice) {
         .catch(() => resetInvoiceNum());
     });
   });
+  const userName = document.createElement("h5");
+  userName.id = "user-name";
+  userName.textContent = "User Name: ";
+  const userNameContent = document.createElement("span");
+  userNameContent.innerText = invoice.user.name;
+  userName.append(userNameContent);
 
-  userName.innerText = `User Name: ${invoice.user.name}`;
-  const userNameEditBtn = document.createElement("button");
-  userNameEditBtn.innerText = "Edit";
-  console.log("Appending user name edit button");
-  userName.append(userNameEditBtn);
+  addEditListener(userNameContent, event => {
+    console.log(event.target.textContent);
+    api.patchUser(invoice.user.id, { name: event.target.textContent });
+  });
+
+  //const userNameEditBtn = document.createElement("button");
+  //userNameEditBtn.innerText = "Edit";
+  //userName.append(userNameEditBtn);
 
   userAddr.innerText = `User Adress: ${invoice.user.address}`;
   userCardBody.classList.add("card-body");
@@ -103,6 +112,13 @@ function displayInv(invoice) {
   userCardBody.classList.add("card-body");
   buyerCard.append(buyerName, buyerAddr);
   buyerCard.append(buyerCardBody);
+
+  // const workItemDesc = document.createElement("p");
+  // workItemDesc.innerText =
+  // description: "web maintain",
+  // quantity: 10,
+  // rate: 60,
+  // amount: 70,
 
   showInvDetail.append(logoImg, invNum, userCard, buyerCard);
 }
