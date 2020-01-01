@@ -30,14 +30,22 @@ function renderInvoice(invId) {
 
 function displayInv(invoice) {
   showInvDetail.innerHTML = "";
+  invNum.innerHTML = "";
+
   logoImg.src = invoice.logo;
+
+  const invNumContent = document.createElement("span");
+  invNum.append(invNumContent);
   invNumContent.innerText = `Invoice # ${invoice.invoiceNumber}`;
+
   const invNumEditBtn = document.createElement("button");
-  invNumEditBtn.class = "btn-warning";
+
   invNumEditBtn.classList.add("btn");
   invNumEditBtn.classList.add("btn-link");
   invNumEditBtn.classList.add("btn-sm");
   invNumEditBtn.innerText = "Edit";
+
+  console.log("Appending invoice number edit button");
   invNum.append(invNumEditBtn);
 
   invNumEditBtn.addEventListener("click", () => {
@@ -83,6 +91,7 @@ function displayInv(invoice) {
   userName.innerText = `User Name: ${invoice.user.name}`;
   const userNameEditBtn = document.createElement("button");
   userNameEditBtn.innerText = "Edit";
+  console.log("Appending user name edit button");
   userName.append(userNameEditBtn);
 
   userAddr.innerText = `User Adress: ${invoice.user.address}`;

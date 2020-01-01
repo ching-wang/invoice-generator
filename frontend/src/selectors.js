@@ -18,8 +18,7 @@ logoImg.style.width = "30%";
 logoImg.style.height = "auto";
 
 const invNum = document.createElement("p");
-const invNumContent = document.createElement("span");
-invNum.append(invNumContent);
+invNum.id = "inv-num";
 
 const userName = document.createElement("h5");
 
