@@ -32,16 +32,26 @@ inv_b = Invoice.create(
   buyer_id: buyer_b.id,
 )
 
+inv_c = Invoice.create(
+  logo: "https://d1.awsstatic.com/case-studies/Flatiron%20Logo.cfea1e05f55b890e20228e5eef33a2ea2053864f.png",
+  invoiceNumber: "898888888",
+  invoiceDate: 20200102,
+  duedate: 20200201,
+  notes: "This is a test notes",
+  user_id: user_b.id,
+  buyer_id: buyer_b.id,
+)
+
 workItem_a = WorkItem.create(
-  description: "web maintain",
+  description: "Server Maintain",
   quantity: 10,
-  rate: 60,
-  amount: 70,
+  rate: 600,
+  amount: 600,
   invoice_id: inv_a.id,
 )
 
 workItem_b = WorkItem.create(
-  description: "water",
+  description: "Web Maintain",
   quantity: 6,
   rate: 10,
   amount: 16,
@@ -49,17 +59,65 @@ workItem_b = WorkItem.create(
 )
 
 workItem_c = WorkItem.create(
-  description: "QA",
+  description: "ISO900 Auditing",
   quantity: 1,
-  rate: 50,
-  amount: 60,
+  rate: 500,
+  amount: 500,
   invoice_id: inv_b.id,
 )
 
 workItem_d = WorkItem.create(
-  description: "curtains",
+  description: "Web Design",
   quantity: 8,
   rate: 100,
   amount: 800,
   invoice_id: inv_b.id,
+)
+
+workItem_e = WorkItem.create(
+  description: "Books",
+  quantity: 2,
+  rate: 100,
+  amount: 200,
+  invoice_id: inv_b.id,
+)
+
+workItem_f = WorkItem.create(
+  description: "Gardening",
+  quantity: 4,
+  rate: 100,
+  amount: 400,
+  invoice_id: inv_a.id,
+)
+
+workItem_g = WorkItem.create(
+  description: "Test Items 1",
+  quantity: 5,
+  rate: 100,
+  amount: 500,
+  invoice_id: inv_b.id,
+)
+
+workItem_h = WorkItem.create(
+  description: "Test Items 2",
+  quantity: 1,
+  rate: 100,
+  amount: 100,
+  invoice_id: inv_c.id,
+)
+
+workItem_i = WorkItem.create(
+  description: "Test Items 3",
+  quantity: 2,
+  rate: 100,
+  amount: 200,
+  invoice_id: inv_c.id,
+)
+
+workItem_j = WorkItem.create(
+  description: "Test Items 4",
+  quantity: 2,
+  rate: 100,
+  amount: 200,
+  invoice_id: inv_a.id,
 )

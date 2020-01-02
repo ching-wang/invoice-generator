@@ -8,7 +8,7 @@ const displayWorkItems = workItems => {
   workItemsContainer.classList.add("container");
   workItemsContainer.id = "work-items";
 
-  const workItemsTitle = document.createElement("h3");
+  const workItemsTitle = document.createElement("h5");
   workItemsTitle.textContent = `Invoice Work Items: ${workItems.length}`;
   workItemsContainer.append(document.createElement("hr"));
   workItemsContainer.append(workItemsTitle);
@@ -34,7 +34,7 @@ const displayWorkItemHeader = () => {
   ["Description", "Quantity", "Amount", "Sub-total"].forEach(
     (headerText, i) => {
       const headerCol = createCol();
-      const header = document.createElement("h5");
+      const header = document.createElement("h4");
       if (i !== 0) {
         header.style.textAlign = "right";
       }

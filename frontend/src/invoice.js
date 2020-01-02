@@ -62,6 +62,7 @@ const displayInvoiceNumber = invoice => {
   invNum.textContent = "Invoice # ";
   invNum.append(invNumContent);
   invNumContent.innerText = invoice.invoiceNumber;
+
   addEditListener(invNumContent, event => {
     api
       .patchInvoice(invoice.id, {
@@ -78,6 +79,24 @@ const displayInvoiceDate = invoice => {
   invDate.textContent = "Invoice Date: ";
   invDate.append(invDateContent);
   invDateContent.innerText = invoice.invoiceDate;
+
+  addEditListener(invDateContent, event => {
+    api
+      .patchInvoice(invoice.id, {
+        invoiceDate: event.target.textContent.trim()
+      })
+      .then(data => {
+        event.target.textContent = data.invoiceDate;
+        
+      });
+  });
+};
+
+const displayInvDueDate = invoice => {
+  const invDueDateContent = document.createElement("span");
+  invDueDate.textContent = "Due Date: ";
+  invDueDate.append(invDueDateContent);
+  invDueDateContent.innerText = invoice.duedate;
 };
 
 const displayInvoiceUser = invoice => {
@@ -100,18 +119,11 @@ const displayInvoiceUser = invoice => {
       });
   });
 
-  userAddr.innerText = `User Adress: ${invoice.user.address || "-"}`;
+  userAddr.innerText = `User Address: ${invoice.user.address || "-"}`;
   userCardBody.append(userName, userAddr);
   userCard.append(userCardBody);
 
   return invUserCol;
-};
-
-const displayInvDueDate = invoice => {
-  const invDueDateContent = document.createElement("span");
-  invDueDate.textContent = "Due Date: ";
-  invDueDate.append(invDueDateContent);
-  invDueDateContent.innerText = invoice.duedate;
 };
 
 const displayInvoiceBuyer = invoice => {
