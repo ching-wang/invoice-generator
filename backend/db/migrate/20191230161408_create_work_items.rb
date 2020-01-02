@@ -3,7 +3,6 @@ class CreateWorkItems < ActiveRecord::Migration[6.0]
     create_table :work_items do |t|
       t.string :description
       t.decimal :quantity
-      t.decimal :rate
       t.decimal :amount
       t.references :invoice, null: false, foreign_key: true
 

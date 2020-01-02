@@ -7,9 +7,6 @@ class WorkItem < ApplicationRecord
   validates :quantity, {
     presence: true,
   }
-  validates :rate, {
-    presence: true,
-  }
   validates :amount, {
     presence: true,
   }

@@ -2,16 +2,11 @@ function renderInvoices(invoices) {
   invoices
     .filter(invoice => !!invoice.invoiceNumber)
     .forEach(invoice => {
-      invoiceNumLi.classList.add("list-group-item");
       const invBtn = document.createElement("button");
-      ["btn", "btn-secondary", "btn-lg", "active"].forEach(cls =>
-        invBtn.classList.add(cls)
-      );
-      invBtn.style.margin = "10px";
+      addInvBtnClasses(invBtn);
       invBtn.innerText = `Invoice Nº ${invoice.invoiceNumber}`;
       invBtn.id = `invoice-${invoice.id}`;
-      invoiceNumLi.append(invBtn);
-      invoiceUl.append(invoiceNumLi);
+      selectInvoiceButtons().append(invBtn);
 
       invBtn.addEventListener("click", () => {
         renderInvoice(invoice.id);
@@ -19,11 +14,17 @@ function renderInvoices(invoices) {
     });
 }
 
+function addInvBtnClasses(btn) {
+  ["btn", "btn-secondary", "btn-warning", "inv-btn"].forEach(cls =>
+    btn.classList.add(cls)
+  );
+}
+
 function renderInvoice(invId) {
   api.getInvoice(invId).then(invoice => {
     displayInv(invoice);
 
-    const workItemsCont = displayWorkItems(invoice.workItems);
+    const workItemsCont = displayWorkItems(invoice);
     invoiceCardBody.append(workItemsCont);
   });
 }
@@ -57,6 +58,18 @@ const displayInvoiceLogo = invoice => {
     logoImg.src =
       "https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png";
   }
+  logoImg.style.cursor = "pointer";
+  logoImg.title = "Click to change image";
+
+  logoImg.addEventListener("click", event => {
+    const newLogoUrl = String(window.prompt("New logo image URL:"));
+    if (!newLogoUrl || newLogoUrl.length < 10) {
+      return;
+    }
+    api.patchInvoice(invoice.id, { logo: newLogoUrl }).then(data => {
+      event.target.src = data.logo;
+    });
+  });
 
   invLogoCol.append(invNum);
   invLogoCol.append(logoImg);
@@ -77,18 +90,31 @@ const displayInvoiceNumber = invoice => {
       })
       .then(data => {
         event.target.textContent = data.invoiceNumber;
-        document.querySelector(
-          `#invoice-${invoice.id}`
-        ).textContent = `Invoice Nº ${data.invoiceNumber}`;
+        updateInvoiceButton(data);
       });
   });
+};
+
+const updateInvoiceButton = invoice => {
+  if (!invoice || !invoice.invoiceNumber || invoice.invoiceNumber === "-") {
+    return;
+  }
+  const buttonId = `#invoice-${invoice.id}`;
+  let button = document.querySelector(buttonId);
+  if (!button) {
+    button = document.createElement("button");
+    button.id = buttonId;
+    addInvBtnClasses(button);
+    selectInvoiceButtons().append(button);
+  }
+  button.textContent = `Invoice Nº ${invoice.invoiceNumber}`;
 };
 
 const displayInvoiceDate = invoice => {
   const invDateContent = document.createElement("span");
   invDate.textContent = "Invoice Date: ";
   invDate.append(invDateContent);
-  invDateContent.innerText = invoice.invoiceDate;
+  invDateContent.innerText = invoice.invoiceDate || "-";
 
   addEditListener(invDateContent, event => {
     api
@@ -105,7 +131,7 @@ const displayInvDueDate = invoice => {
   const invDueDateContent = document.createElement("span");
   invDueDate.textContent = "Due Date: ";
   invDueDate.append(invDueDateContent);
-  invDueDateContent.innerText = invoice.duedate;
+  invDueDateContent.innerText = invoice.duedate || "-";
 
   addEditListener(invDueDateContent, event => {
     api
@@ -124,7 +150,7 @@ const displayInvoiceUser = invoice => {
   invUserCol.append(invDate, userCard);
 
   userName.id = "user-name";
-  userName.textContent = "User Name: ";
+  userName.textContent = "Seller Name: ";
   const userNameContent = document.createElement("span");
   userNameContent.innerText = invoice.user.name || "-";
   userName.append(userNameContent);

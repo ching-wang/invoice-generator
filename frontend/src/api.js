@@ -39,6 +39,14 @@ class InvoiceGeneratorApi {
     return this.fetchJson(`${workItemID}`);
   }
 
+  async postWorkItem(data) {
+    return this.postJson("/work_items", data);
+  }
+
+  async patchWorkItem(workItemId, data) {
+    return this.patchJson(`/work_items/${workItemId}`, data);
+  }
+
   async postInvoice(data) {
     return this.postJson("/invoices", data);
   }

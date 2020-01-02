@@ -10,42 +10,47 @@
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="src/style.css">
+    <link rel="stylesheet" href="src/style.css" />
     <title>Invoice Generator</title>
   </head>
   <body>
-
     <nav class="navbar navbar-dark bg-primary">
       <div class="container">
-       <h1 class="text-white">Invoice Generator</h1>
-       <form class="form-inline">
-        <button id="new-invoice", class="btn btn-outline-dark my-2 my-sm-0" type="button">Create an Invoice
-        </button>
-      </form>
+        <h1 class="text-white">Invoice Generator</h1>
+        <form class="form-inline">
+          <button
+            id="new-invoice"
+            class="btn btn-outline-dark my-2 my-sm-0"
+            type="button"
+          >
+            Create an Invoice
+          </button>
+        </form>
       </div>
     </nav>
+
     <div id="wrapper" class="container">
-     <div class="row justify-content-center">
-       <div class="col">
-        <ul id="invoice-ul" , class="list-group"></ul>
-       </div>
-     </div>
-     <div class="row justify-content-center">
-      <div class="col">
-        <div id="invoice-container"></div>
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <div id="invoice-buttons"></div>
+            </div>
+          </div>
+        </div>
       </div>
-     </div>
-     <div id="show-pane">
-     <div class="card">
-       <div class="card-body" id="invoice-card-body">
+
+      <div id="show-pane" class="card">
+        <div class="card-body" id="invoice-card-body">
           <div class="row" id="show-inv-detail">
             <div class="col"></div>
             <div class="col"></div>
             <div class="col"></div>
           </div>
-       </div>
-     </div>
+        </div>
+      </div>
     </div>
+
     <script src="src/util.js"></script>
     <script src="src/editable.js"></script>
     <script src="src/api.js"></script>

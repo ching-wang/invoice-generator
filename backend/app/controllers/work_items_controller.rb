@@ -11,13 +11,22 @@ class WorkItemsController < ApplicationController
 
   def update
     workItem = WorkItem.find(params[:id])
-    workItem.update(workItem_params)
+    workItem.update(work_item_params)
     render json: workItem
+  end
+
+  def create
+    work_item = WorkItem.new(work_item_params)
+    if work_item.save
+      render json: work_item
+    else
+      render :json => { :errors => work_item.errors.full_messages }
+    end
   end
 
   private
 
-  def workItem_params
-    params.require(:workItem).permit(:description, :quantity, :rate, :amount)
+  def work_item_params
+    params.require(:work_item).permit(:invoice_id, :description, :quantity, :amount)
   end
 end
