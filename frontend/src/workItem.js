@@ -53,6 +53,7 @@ const displayWorkItemHeader = () => {
 
 const displayWorkItem = workItem => {
   const workItemContainer = document.createElement("div");
+  workItemContainer.id = `work-item-${workItem.id}`;
   workItemContainer.classList.add("row");
   workItemContainer.classList.add("work-item-row");
 
@@ -67,14 +68,35 @@ const displayWorkItem = workItem => {
   const workItemQuantity = createCol();
   workItemQuantity.classList.add("number-col");
   workItemQuantity.textContent = parseFloat(workItem.quantity);
-  addEditListener(workItemQuantity);
+  addEditListener(workItemQuantity, event => {
+    if (isNaN(parseFloat(event.target.textContent))) {
+      return;
+    }
+    api
+      .patchWorkItem(workItem.id, {
+        quantity: parseFloat(event.target.textContent)
+      })
+      .then(data => {
+        event.target.textContent = parseFloat(data.quantity);
+        updateWorkItemRowSubTotal(data);
+      });
+  });
 
   const workItemAmount = createCol();
   workItemAmount.classList.add("number-col");
   workItemAmount.textContent = money(workItem.amount);
-  addEditListener(workItemAmount);
+  addEditListener(workItemAmount, event => {
+    const newAmount = parseFloat(
+      String(event.target.textContent).replace(/[^0-9\.]/g, "")
+    );
+    api.patchWorkItem(workItem.id, { amount: newAmount }).then(data => {
+      event.target.textContent = money(data.amount);
+      updateWorkItemRowSubTotal(data);
+    });
+  });
 
   const workItemSubTotal = createCol();
+  workItemSubTotal.id = `work-item-subtotal-${workItem.id}`;
   workItemSubTotal.classList.add("number-col");
   workItemSubTotal.textContent = money(subTotalForWorkItem(workItem));
 
@@ -95,9 +117,9 @@ const subTotalForWorkItem = workItem => {
   return quantity * amount;
 };
 
-const money = amount => {
+function money(amount) {
   return `£ ${parseFloat(amount).toFixed(2)}`;
-};
+}
 
 const displayAddWorkItemButton = invoice => {
   const addWorkItemButton = document.createElement("button");
@@ -119,3 +141,14 @@ const displayAddWorkItemButton = invoice => {
 
   return addWorkItemButton;
 };
+
+function updateWorkItemRowSubTotal(workItem) {
+  const subTotalCol = document.querySelector(
+    `#work-item-subtotal-${workItem.id}`
+  );
+  if (!subTotalCol) {
+    debugLog("Failed to find sub total col", { workItem });
+    return;
+  }
+  subTotalCol.textContent = money(subTotalForWorkItem(workItem));
+}
