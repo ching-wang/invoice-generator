@@ -27,6 +27,9 @@ const displayWorkItems = invoice => {
     workItemsContainer.append(workItemRow);
   });
 
+  const grandTotalRow = displayGrandTotalRow(invoice);
+  workItemsContainer.append(grandTotalRow);
+
   return workItemsContainer;
 };
 
@@ -79,6 +82,7 @@ const displayWorkItem = workItem => {
       .then(data => {
         event.target.textContent = parseFloat(data.quantity);
         updateWorkItemRowSubTotal(data);
+        updateGrandTotalRow(workItem.invoice_id);
       });
   });
 
@@ -92,6 +96,7 @@ const displayWorkItem = workItem => {
     api.patchWorkItem(workItem.id, { amount: newAmount }).then(data => {
       event.target.textContent = money(data.amount);
       updateWorkItemRowSubTotal(data);
+      updateGrandTotalRow(workItem.invoice_id);
     });
   });
 
@@ -135,7 +140,12 @@ const displayAddWorkItemButton = invoice => {
         quantity: 0.0
       })
       .then(data => {
-        document.querySelector("#work-items").append(displayWorkItem(data, 0));
+        document
+          .querySelector("#work-items")
+          .insertBefore(
+            displayWorkItem(data),
+            document.querySelector("#grand-total-row")
+          );
       });
   });
 
@@ -151,4 +161,54 @@ function updateWorkItemRowSubTotal(workItem) {
     return;
   }
   subTotalCol.textContent = money(subTotalForWorkItem(workItem));
+}
+
+function displayGrandTotalRow(invoice) {
+  const grandTotalRow = document.createElement("div");
+  grandTotalRow.id = "grand-total-row";
+  grandTotalRow.classList.add("row");
+  grandTotalRow.classList.add("grand-total-row");
+
+  const descriptionCol = createCol();
+  descriptionCol.textContent = "GRAND TOTAL";
+  grandTotalRow.append(descriptionCol);
+
+  const quantityCol = createCol();
+  quantityCol.id = "grand-quantity-col";
+  quantityCol.classList.add("text-right");
+  quantityCol.textContent = totalQuantityForInvoice(invoice);
+  grandTotalRow.append(quantityCol);
+
+  const placeHolderAmountCol = createCol();
+  grandTotalRow.append(placeHolderAmountCol);
+
+  const grandTotalCol = createCol();
+  grandTotalCol.id = "grand-total-col";
+  grandTotalCol.classList.add("text-right");
+  grandTotalCol.textContent = money(grandTotalForInvoice(invoice));
+  grandTotalRow.append(grandTotalCol);
+
+  return grandTotalRow;
+}
+
+function updateGrandTotalRow(invoiceId) {
+  api.getInvoice(invoiceId).then(data => {
+    const quantityCol = document.querySelector("#grand-quantity-col");
+    quantityCol.textContent = totalQuantityForInvoice(data);
+
+    const grandTotalCol = document.querySelector("#grand-total-col");
+    grandTotalCol.textContent = money(grandTotalForInvoice(data));
+  });
+}
+
+function totalQuantityForInvoice(invoice) {
+  return invoice.workItems.reduce((sum, workItem) => {
+    return sum + parseFloat(workItem.quantity);
+  }, 0.0);
+}
+
+function grandTotalForInvoice(invoice) {
+  return invoice.workItems.reduce((sum, workItem) => {
+    return sum + subTotalForWorkItem(workItem);
+  }, 0.0);
 }

@@ -33,3 +33,10 @@
 .work-item-row:nth-child(odd) {
   background: lightgray;
 }
+
+.grand-total-row {
+  padding: 0.5em 0;
+  background: lightgreen;
+  font-weight: bold;
+  font-size: larger;
+}
