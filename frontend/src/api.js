@@ -47,8 +47,16 @@ class InvoiceGeneratorApi {
     return this.patchJson(`/invoices/${invoiceId}`, patchData);
   }
 
+  async postInvoice(invoiceData = {}) {
+    return this.postJson("/invoices", invoiceData);
+  }
+
   async patchUser(userId, patchData) {
     return this.patchJson(`/users/${userId}`, patchData);
+  }
+
+  async patchBuyer(buyerId, patchData) {
+    return this.patchJson(`/buyers/${buyerId}`, patchData);
   }
 
   async fetchJson(path) {
