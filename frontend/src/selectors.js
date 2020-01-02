@@ -2,7 +2,6 @@ const selectTitle = () => document.querySelector("h1");
 selectTitle();
 
 const selectNewInvBtn = () => document.querySelector("#new-invoice");
-selectNewInvBtn();
 
 const invoiceUl = document.querySelector("#invoice-ul");
 const invoiceNumLi = document.createElement("li");

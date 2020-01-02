@@ -6,7 +6,7 @@ function renderInvoices(invoices) {
       invBtn.classList.add(cls)
     );
     invBtn.style.margin = "10px";
-    invBtn.innerText = `Invoice No.: ${invoice.invoiceNumber}`;
+    invBtn.innerText = `Invoice Nº ${invoice.invoiceNumber}`;
     invBtn.id = `invoice-${invoice.id}`;
     invoiceNumLi.append(invBtn);
     invoiceUl.append(invoiceNumLi);
@@ -70,6 +70,9 @@ const displayInvoiceNumber = invoice => {
       })
       .then(data => {
         event.target.textContent = data.invoiceNumber;
+        document.querySelector(
+          `#invoice-${invoice.id}`
+        ).textContent = `Invoice Nº ${data.invoiceNumber}`;
       });
   });
 };
@@ -120,7 +123,7 @@ const displayInvoiceUser = invoice => {
   userName.append(userNameContent);
 
   addEditListener(userNameContent, event => {
-    console.log(event.target.textContent);
+    //console.log(event.target.textContent);
     api
       .patchUser(invoice.user.id, { name: event.target.textContent })
       .then(data => {
@@ -139,9 +142,25 @@ const displayInvoiceBuyer = invoice => {
   const invBuyerCol = createCol();
   invBuyerCol.append(invDueDate, buyerCard);
 
-  buyerName.innerText = `Bill to: ${invoice.buyer.name}`;
-  buyerAddr.innerText = `${invoice.buyer.address}`;
-  buyerCardBody.classList.add("card-body");
+  buyerName.id = "buyer-name";
+  buyerName.textContent = "Bill to: ";
+  const buyerNameContent = document.createElement("span");
+  buyerNameContent.innerText = invoice.buyer.name || "-";
+  buyerName.append(buyerNameContent);
+
+  addEditListener(buyerNameContent, event => {
+    //console.log(event.target.textContent);
+    api
+      .patchBuyer(invoice.buyer.id, { name: event.target.textContent })
+      .then(data => {
+        console.log((event.target.textContent = data.name));
+      });
+  });
+
+  //buyerName.innerText = `Bill to: ${invoice.buyer.name}`;
+
+  buyerAddr.innerText = `Address: ${invoice.buyer.address}`;
+  //buyerCardBody.classList.add("card-body");
   buyerCardBody.append(buyerName, buyerAddr);
   buyerCard.append(buyerCardBody);
 
