@@ -31,6 +31,9 @@ function displayInv(invoice) {
 
   const invLogoCol = displayInvoiceLogo(invoice);
   displayInvoiceNumber(invoice);
+
+  const invDate = displayInvoiceDate(invoice);
+  const invDueDate = displayInvDueDate(invoice);
   const invUserCol = displayInvoiceUser(invoice);
   const invBuyerCol = displayInvoiceBuyer(invoice);
   showInvDetail.append(invLogoCol, invUserCol, invBuyerCol);
@@ -70,9 +73,17 @@ const displayInvoiceNumber = invoice => {
   });
 };
 
+const displayInvoiceDate = invoice => {
+  const invDateContent = document.createElement("span");
+  invDate.textContent = "Invoice Date: ";
+  invDate.append(invDateContent);
+  invDateContent.innerText = invoice.invoiceDate;
+};
+
 const displayInvoiceUser = invoice => {
   const invUserCol = createCol();
-  invUserCol.append(userCard);
+  userCard.append(invDate);
+  invUserCol.append(invDate, userCard);
 
   userName.id = "user-name";
   userName.textContent = "User Name: ";
@@ -96,9 +107,16 @@ const displayInvoiceUser = invoice => {
   return invUserCol;
 };
 
+const displayInvDueDate = invoice => {
+  const invDueDateContent = document.createElement("span");
+  invDueDate.textContent = "Due Date: ";
+  invDueDate.append(invDueDateContent);
+  invDueDateContent.innerText = invoice.duedate;
+};
+
 const displayInvoiceBuyer = invoice => {
   const invBuyerCol = createCol();
-  invBuyerCol.append(buyerCard);
+  invBuyerCol.append(invDueDate, buyerCard);
 
   buyerName.innerText = `Bill to: ${invoice.buyer.name}`;
   buyerAddr.innerText = `${invoice.buyer.address}`;

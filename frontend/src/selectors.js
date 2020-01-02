@@ -19,6 +19,12 @@ logoImg.classList.add("card-img-top");
 const invNum = document.createElement("p");
 invNum.id = "inv-num";
 
+const invDate = document.createElement("p");
+invDate.id = "inv-date";
+
+const invDueDate = document.createElement("p");
+invDueDate.id = "inv-due-date";
+
 const userName = document.createElement("h5");
 
 const userAddr = document.createElement("p");
