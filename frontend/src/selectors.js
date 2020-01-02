@@ -3,8 +3,7 @@ selectTitle();
 
 const selectNewInvBtn = () => document.querySelector("#new-invoice");
 
-const invoiceUl = document.querySelector("#invoice-ul");
-const invoiceNumLi = document.createElement("li");
+const selectInvoiceButtons = () => document.querySelector("#invoice-buttons");
 
 const invoiceCardBody = document.querySelector("#invoice-card-body");
 
@@ -37,6 +36,7 @@ userCard.classList.add("card");
 const buyerName = document.createElement("h5");
 const buyerAddr = document.createElement("p");
 const buyerCardBody = document.createElement("div");
+buyerCardBody.classList.add("card-body");
 
 const buyerCard = document.createElement("div");
 buyerCard.classList.add("card");

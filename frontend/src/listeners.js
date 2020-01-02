@@ -3,9 +3,12 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 selectNewInvBtn().addEventListener("click", () => {
-  api.postInvoice({ user_id: 1 }).then(data => renderInvoice(data.id));
+  api
+    .postInvoice({
+      invoiceNumber: "-",
+      invoiceDate: new Date().toISOString(),
+      duedate: new Date().toISOString(),
+      user_id: 1
+    })
+    .then(data => renderInvoice(data.id));
 });
-
-// selectTitle().addEventListener("click", () => {
-//   window.alert("Hello there! this is your invoice generator!");
-// });

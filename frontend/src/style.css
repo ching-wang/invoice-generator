@@ -13,5 +13,23 @@
 }
 
 [contenteditable] {
-  outline: 1px lightgray dashed;
+  border: 1px skyblue dashed;
+  padding: 0.3em;
+}
+
+[contenteditable]:hover {
+  border: 1px cornflowerblue solid;
+}
+
+[contenteditable]:focus {
+  border: 2px coral solid;
+  background: #efefef;
+}
+
+.inv-btn {
+  margin: 0.5em;
+}
+
+.work-item-row:nth-child(odd) {
+  background: lightgray;
 }
