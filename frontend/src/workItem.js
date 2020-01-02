@@ -128,7 +128,9 @@ function money(amount) {
 
 const displayAddWorkItemButton = invoice => {
   const addWorkItemButton = document.createElement("button");
-  ["btn", "btn-success"].forEach(cls => addWorkItemButton.classList.add(cls));
+  ["btn", "btn-success", "d-print-none"].forEach(cls =>
+    addWorkItemButton.classList.add(cls)
+  );
   addWorkItemButton.textContent = "+ Add new work item";
 
   addWorkItemButton.addEventListener("click", () => {

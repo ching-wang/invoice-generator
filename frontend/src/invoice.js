@@ -62,7 +62,7 @@ const displayInvoiceLogo = invoice => {
   logoImg.title = "Click to change image";
 
   logoImg.addEventListener("click", event => {
-    const newLogoUrl = String(window.prompt("New logo image URL:"));
+    const newLogoUrl = window.prompt("New logo image URL:");
     if (!newLogoUrl || newLogoUrl.length < 10) {
       return;
     }
