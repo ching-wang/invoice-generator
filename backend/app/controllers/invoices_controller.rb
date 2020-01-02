@@ -18,6 +18,6 @@ class InvoicesController < ApplicationController
   private
 
   def invoice_params
-    params.require(:invoice).permit(:logo, :invoiceNumber, :invoiceDate, :notes)
+    params.require(:invoice).permit(:logo, :invoiceNumber, :invoiceDate, :duedate, :notes)
   end
 end

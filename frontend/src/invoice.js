@@ -87,7 +87,6 @@ const displayInvoiceDate = invoice => {
       })
       .then(data => {
         event.target.textContent = data.invoiceDate;
-        
       });
   });
 };
@@ -97,6 +96,16 @@ const displayInvDueDate = invoice => {
   invDueDate.textContent = "Due Date: ";
   invDueDate.append(invDueDateContent);
   invDueDateContent.innerText = invoice.duedate;
+
+  addEditListener(invDueDateContent, event => {
+    api
+      .patchInvoice(invoice.id, {
+        duedate: event.target.textContent.trim()
+      })
+      .then(data => {
+        event.target.textContent = data.duedate;
+      });
+  });
 };
 
 const displayInvoiceUser = invoice => {
