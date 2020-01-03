@@ -125,6 +125,7 @@ const displayWorkItem = workItem => {
     );
     api.deleteWorkItem(workItem.id).then(() => {
       workItemtoDelete.remove();
+      updateGrandTotalRow(workItem.invoice_id);
     });
   });
 
