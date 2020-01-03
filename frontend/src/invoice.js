@@ -163,7 +163,20 @@ const displayInvoiceUser = invoice => {
       });
   });
 
-  userAddr.innerText = `User Address: ${invoice.user.address || "-"}`;
+  userAddr.id = "seller-addr";
+  userAddr.textContent = "User Address: ";
+  const userAddrContent = document.createElement("span");
+  userAddrContent.innerText = invoice.user.address || "-";
+  userAddr.append(userAddrContent);
+
+  addEditListener(userAddrContent, event => {
+    api
+      .patchUser(invoice.user.id, { address: event.target.textContent })
+      .then(data => {
+        event.target.textContent = data.address;
+      });
+  });
+
   userCardBody.append(userName, userAddr);
   userCard.append(userCardBody);
 
@@ -187,6 +200,9 @@ const displayInvoiceBuyer = invoice => {
         console.log((event.target.textContent = data.name));
       });
   });
+
+
+  
 
   buyerAddr.innerText = `Address: ${invoice.buyer.address}`;
   buyerCardBody.append(buyerName, buyerAddr);
