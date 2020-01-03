@@ -164,7 +164,7 @@ const displayInvoiceUser = invoice => {
   });
 
   userAddr.id = "seller-addr";
-  userAddr.textContent = "User Address: ";
+  userAddr.textContent = "Seller Address: ";
   const userAddrContent = document.createElement("span");
   userAddrContent.innerText = invoice.user.address || "-";
   userAddr.append(userAddrContent);
@@ -201,10 +201,20 @@ const displayInvoiceBuyer = invoice => {
       });
   });
 
+  buyerAddr.id = "buyer-addr";
+  buyerAddr.textContent = "Buyer Address: ";
+  const buyerAddrContent = document.createElement("span");
+  buyerAddrContent.innerText = invoice.buyer.address || "-";
+  buyerAddr.append(buyerAddrContent);
 
-  
+  addEditListener(buyerAddrContent, event => {
+    api
+      .patchBuyer(invoice.buyer.id, { address: event.target.textContent })
+      .then(data => {
+        event.target.textContent = data.address;
+      });
+  });
 
-  buyerAddr.innerText = `Address: ${invoice.buyer.address}`;
   buyerCardBody.append(buyerName, buyerAddr);
   buyerCard.append(buyerCardBody);
 
