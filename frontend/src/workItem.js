@@ -56,6 +56,7 @@ const displayWorkItemHeader = () => {
 
 const displayWorkItem = workItem => {
   const workItemContainer = document.createElement("div");
+
   workItemContainer.id = `work-item-${workItem.id}`;
   workItemContainer.classList.add("row");
   workItemContainer.classList.add("work-item-row");
@@ -105,12 +106,27 @@ const displayWorkItem = workItem => {
   workItemSubTotal.classList.add("number-col");
   workItemSubTotal.textContent = money(subTotalForWorkItem(workItem));
 
+  const deleteBtn = document.createElement("delete");
+  deleteBtn.classList = "btn btn-sm btn-danger";
+  deleteBtn.innerText = " X ";
+
   workItemContainer.append(
     workItemDesc,
     workItemQuantity,
     workItemAmount,
-    workItemSubTotal
+    workItemSubTotal,
+    deleteBtn
   );
+
+  //Delete workItem
+  deleteBtn.addEventListener("click", event => {
+    const workItemtoDelete = document.querySelector(
+      `#work-item-${workItem.id}`
+    );
+    api.deleteWorkItem(workItem.id).then(() => {
+      workItemtoDelete.remove();
+    });
+  });
 
   return workItemContainer;
 };

@@ -36,7 +36,12 @@
 
 .grand-total-row {
   padding: 0.5em 0;
-  background: lightgreen;
+  background: navy;
   font-weight: bold;
   font-size: larger;
+  color: white;
+}
+
+.delete-button {
+  color: red;
 }

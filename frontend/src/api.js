@@ -35,14 +35,17 @@ class InvoiceGeneratorApi {
     return this.fetchJson("/work_items");
   }
 
+  //get work-item
   async getWorkItem(workItemID) {
     return this.fetchJson(`${workItemID}`);
   }
 
+  //Post work-items
   async postWorkItem(data) {
     return this.postJson("/work_items", data);
   }
 
+  //update work-items
   async patchWorkItem(workItemId, data) {
     return this.patchJson(`/work_items/${workItemId}`, data);
   }
@@ -50,13 +53,17 @@ class InvoiceGeneratorApi {
   async postInvoice(data) {
     return this.postJson("/invoices", data);
   }
-
-  async patchInvoice(invoiceId, patchData) {
-    return this.patchJson(`/invoices/${invoiceId}`, patchData);
-  }
-
   async postInvoice(invoiceData = {}) {
     return this.postJson("/invoices", invoiceData);
+  }
+
+  // Delete work-item
+  async deleteWorkItem(workItemID) {
+    return this.deleteJson(`/work_items/${workItemID}`);
+  }
+  //Update invoice
+  async patchInvoice(invoiceId, patchData) {
+    return this.patchJson(`/invoices/${invoiceId}`, patchData);
   }
 
   async patchUser(userId, patchData) {
@@ -76,6 +83,21 @@ class InvoiceGeneratorApi {
     debugLog("API got response", { url, status: res.status, json });
 
     return json;
+  }
+
+  //Delete
+  async deleteJson(path) {
+    const url = this.makeUrl(path);
+    const config = {
+      method: "DELETE"
+    };
+    debugLog("API patching URL...", { url, config });
+
+    return fetch(url, config);
+    // const json = await res.json();
+    // debugLog("API got response from PATCH", { url, status: res.status, json });
+
+    // return json;
   }
 
   async patchJson(path, body) {

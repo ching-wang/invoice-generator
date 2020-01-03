@@ -24,6 +24,12 @@ class WorkItemsController < ApplicationController
     end
   end
 
+  def destroy
+    workItem = WorkItem.find(params[:id])
+    workItem.destroy
+    render json: workItem
+  end
+
   private
 
   def work_item_params
