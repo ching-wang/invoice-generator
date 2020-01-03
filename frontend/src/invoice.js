@@ -156,7 +156,6 @@ const displayInvoiceUser = invoice => {
   userName.append(userNameContent);
 
   addEditListener(userNameContent, event => {
-    //console.log(event.target.textContent);
     api
       .patchUser(invoice.user.id, { name: event.target.textContent })
       .then(data => {
@@ -182,7 +181,6 @@ const displayInvoiceBuyer = invoice => {
   buyerName.append(buyerNameContent);
 
   addEditListener(buyerNameContent, event => {
-    //console.log(event.target.textContent);
     api
       .patchBuyer(invoice.buyer.id, { name: event.target.textContent })
       .then(data => {
@@ -190,10 +188,7 @@ const displayInvoiceBuyer = invoice => {
       });
   });
 
-  //buyerName.innerText = `Bill to: ${invoice.buyer.name}`;
-
   buyerAddr.innerText = `Address: ${invoice.buyer.address}`;
-  //buyerCardBody.classList.add("card-body");
   buyerCardBody.append(buyerName, buyerAddr);
   buyerCard.append(buyerCardBody);
 
