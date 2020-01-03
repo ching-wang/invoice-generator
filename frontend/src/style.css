@@ -41,3 +41,7 @@
   font-size: larger;
   color: white;
 }
+
+.delete-button {
+  color: red;
+}
