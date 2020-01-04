@@ -107,7 +107,7 @@ const displayWorkItem = workItem => {
   workItemSubTotal.textContent = money(subTotalForWorkItem(workItem));
 
   const deleteBtn = document.createElement("delete");
-  deleteBtn.classList = "btn btn-sm btn-danger";
+  deleteBtn.classList = "btn btn-sm btn-danger d-print-none";
   deleteBtn.innerText = " X ";
 
   workItemContainer.append(
